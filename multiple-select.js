@@ -643,26 +643,18 @@
                 this.$selectGroups.parent().show();
                 this.$noResults.hide();
             } else {
-				if (this.options.filterOnOptGroups) {
-					this.$selectGroups.each(function () {
-						var $parent = $(this).parent();
-						$parent[removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ? 'hide' : 'show']();
-					});
-				} else {
-					this.$selectItems.each(function () {
-						var $parent = $(this).parent();
-						$parent[removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ? 'hide' : 'show']();
-					});
-					this.$selectGroups.each(function () {
-						var $parent = $(this).parent();
-						var group = $parent.attr('data-group'),
-							$items = that.$selectItems.filter(':visible');
-						$parent[$items.filter(sprintf('[data-group="%s"]', group)).length ? 'show' : 'hide']();
-					});
-				}
-				
-				this.$disableItems.parent().hide();
-                
+                this.$selectItems.each(function () {
+                    var $parent = $(this).parent();
+                    $parent[removeDiacritics($parent.text().toLowerCase()).indexOf(removeDiacritics(text)) < 0 ? 'hide' : 'show']();
+                });
+                this.$disableItems.parent().hide();
+                this.$selectGroups.each(function () {
+                    var $parent = $(this).parent();
+                    var group = $parent.attr('data-group'),
+                        $items = that.$selectItems.filter(':visible');
+                    $parent[$items.filter(sprintf('[data-group="%s"]', group)).length ? 'show' : 'hide']();
+                });
+
                 //Check if no matches found
                 if (this.$selectItems.parent().filter(':visible').length) {
                     this.$selectAll.parent().show();
@@ -742,7 +734,6 @@
         delimiter: ', ',
         addTitle: false,
         filterAcceptOnEnter: false,
-		filterOnOptGroups: false,
         hideOptgroupCheckboxes: false,
 
         selectAllText: 'Select all',
